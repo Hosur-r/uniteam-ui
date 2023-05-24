@@ -1,0 +1,12 @@
+.active{
+    border-bottom: 2px solid rgb(136, 85, 253);
+}
+
+.nav{
+    border-bottom: 2px solid rgba(135, 85, 253, 0);
+}
+
+.nav:hover{
+    border-bottom: 2px solid rgba(135, 85, 253, 0.308);
+    transition: 0.3s;
+}
