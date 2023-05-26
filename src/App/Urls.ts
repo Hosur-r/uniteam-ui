@@ -1,1 +1,1 @@
-export const formsUrl:string = "http://80.78.240.205:8000/forms"
+export const formsUrl:string = "http://forms.uni-team-inc.online/forms"

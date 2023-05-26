@@ -4,6 +4,9 @@ import { ListForms,  CreateForm } from "./req"
 import { useEffect, useState, Fragment, useRef } from "react"
 import { IFormsList } from "./models"
 import { Dialog, Transition } from '@headlessui/react'
+import { DocumentPlusIcon } from '@heroicons/react/24/solid'
+import { useNavigate } from "react-router-dom"
+import { TransitionHandler } from "../handlers"
 
  function Forms(){
 
@@ -12,6 +15,7 @@ import { Dialog, Transition } from '@headlessui/react'
     const[desc, setDesc] = useState<string>("")
     const [open, setOpen] = useState<boolean>(false)
     const cancelButtonRef = useRef(null)
+    const navigate = useNavigate()
 
     const handler = async () => {
         await ListForms(formsUrl, setListForms)
@@ -22,16 +26,28 @@ import { Dialog, Transition } from '@headlessui/react'
     }, [])
 
     return (
-      <div>
-            <Header/>
-        <div className="flex justify-center items-center flex-wrap max-w-7xl">
+    <div>
+      
+      <Header/> 
+
+      <div className="ml-6">
+        <div className="mb-4">
+            <h1 className="xs:text-lg lg:text-2xl mb-2 font-medium">Мои формы</h1>
+            <div className="border w-2/3  border-indigo-300"></div>
+        </div>
+
+        <div className="flex flex-wrap max-w-[90rem] relative xs:justify-center lg:justify-start">
             {listForms?.map((item, idx) => 
-              <div key={idx} className="border w-60 h-80 p-3 mx-10 my-6">
-                  <p className="">{item?.desc}</p> 
-                  <p className="">{item?.title}</p> 
+              <div key={idx} onClick={() => {TransitionHandler(`/Form/${item.id}`, navigate)}} className="w-52 h-64 p-3 mr-5 my-6 shadow-lg shadow-indigo-50 hover:shadow-indigo-200 hover:scale-105 cursor-pointer border border-indigo-50 rounded-md transition-all">
+                  <p className="text-lg font-medium">{item?.title}</p> 
+                  <p className="text-sm font-light text-gray-400">{item?.desc}</p> 
                 </div>
               )}
-              <button onClick={() => {setOpen(true)}}>Добавить форму</button>
+
+              <div className="flex items-strech fixed bottom-8 right-9 cursor-pointer opacity-75 hover:opacity-100 transition-all" onClick={() => {setOpen(true)}}>
+                  <p className="text-lg px-2 text-gray-900">Создать форму</p>
+                  <DocumentPlusIcon className="h-8 w-8 text-indigo-600" />
+              </div>
         </div>
 
 
@@ -68,8 +84,8 @@ import { Dialog, Transition } from '@headlessui/react'
                               Создание новой формы
                             </Dialog.Title>
                             <div className="mt-2 flex justify-center flex-wrap">
-                              <input placeholder="Название" onChange={event => {setTitle(event.target.value)}} value={title} name="title" type="text" autoComplete="on" className="block w-2/3 rounded-md border-0 py-1.5 my-2 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                              <input placeholder="Описание" onChange={event => {setDesc(event.target.value)}} value={desc}  name="desc" type="text" autoComplete="on" className="block w-2/3  rounded-md border-0 py-1.5 my-2 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                              <input placeholder="Название" onChange={event => {setTitle(event.target.value)}} value={title} name="title" type="text" autoComplete="on" maxLength={18} className="block w-2/3 rounded-md border-0 py-1.5 my-2 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                              <input placeholder="Описание" onChange={event => {setDesc(event.target.value)}} value={desc}  name="desc" type="text" autoComplete="on" maxLength={150} className="block w-2/3  rounded-md border-0 py-1.5 my-2 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                             </div>
                           </div>
                         </div>
@@ -85,6 +101,8 @@ import { Dialog, Transition } from '@headlessui/react'
                               title:title,
                               desc:desc,
                             }])
+                            setTitle("")
+                            setDesc("")
                           }}>
                           Создать
                         </button>
@@ -105,6 +123,7 @@ import { Dialog, Transition } from '@headlessui/react'
           </Transition.Root>
 
       </div>
+    </div>
     )
 }
 
