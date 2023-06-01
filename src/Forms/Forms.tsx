@@ -10,10 +10,11 @@ import { TransitionHandler } from "../handlers"
 
  function Forms(){
 
-    const[listForms, setListForms] = useState<IFormsList[]>([])
-    const[title, setTitle] = useState<string>("")
-    const[desc, setDesc] = useState<string>("")
+    const [listForms, setListForms] = useState<IFormsList[]>([])
+    const [title, setTitle] = useState<string>("")
+    const [desc, setDesc] = useState<string>("")
     const [open, setOpen] = useState<boolean>(false)
+    const [formId, setId] = useState<IFormsList>()
     const cancelButtonRef = useRef(null)
     const navigate = useNavigate()
 
@@ -24,6 +25,10 @@ import { TransitionHandler } from "../handlers"
     useEffect(() => {
         handler()
     }, [])
+
+    const createHandler = async() => {
+      await CreateForm(formsUrl, title, desc, setId)
+    }
 
     return (
     <div>
@@ -94,15 +99,16 @@ import { TransitionHandler } from "../handlers"
                         <button
                           type="button"
                           className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
-                          onClick={() => {
-                            CreateForm(title, desc)
+                          onClick={async() => {
+                            await createHandler()
                             setOpen(false)
-                            setListForms([...listForms, {
-                              title:title,
-                              desc:desc,
-                            }])
-                            setTitle("")
-                            setDesc("")
+                                setListForms([...listForms, {
+                                  title:title,
+                                  desc:desc,
+                                  id:formId?.id
+                                }])
+                                setTitle("")
+                                setDesc("")
                           }}>
                           Создать
                         </button>

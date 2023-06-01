@@ -23,5 +23,6 @@ export interface IField{
 }
 
 export interface IAnswer{
-    content:string
+    id?:number,
+    content:string,
 }

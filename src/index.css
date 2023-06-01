@@ -16,6 +16,17 @@
   .svgIcons{
     width: calc(30px + 1vh);
   }
+  .formInput{
+    border: none;
+    border-bottom: 1px solid rgba(99, 101, 241, 0.486);
+    transition: 0.3s;
+
+  }
+
+  .formInput:focus{
+    outline: none;
+    background-color: rgba(99, 101, 241, 0.144);
+  }
 }
 
 body {
