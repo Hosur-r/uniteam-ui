@@ -23,7 +23,7 @@ function Answers (props:any) {
     }, [answerValue]);
 
     return (
-      <div className="w-full p-4 shadow-lg rounded-md">
+      <div className="w-full p-4">
 
         {answer?.map((item:any, idx:number) => {
           return(
@@ -48,10 +48,13 @@ function Answers (props:any) {
         <div className="flex items-center mb-2 w-full">
             <input placeholder="Добавить ответ" onChange={event => {setContent(event.target.value)}} value={content} name="title" type="text" autoComplete="on" maxLength={18} className="block w-full rounded-md border-0 py-1.5 my-2 pl-5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 xs:text-sm xs:leading-6"/>
               
-              <PlusCircleIcon className="w-7 h-7 text-indigo-500 opacity-60 hover:opacity-100 transition-all cursor-pointer" onClick={() => {
-                  CreateAnswer(formsUrl, content, props.id, props.fieldId)
+              <PlusCircleIcon 
+              className="w-7 h-7 text-indigo-500 opacity-60 hover:opacity-100 transition-all cursor-pointer" 
+              onClick={async() => {
+                  let answersId = await CreateAnswer(formsUrl, content, props.id, props.fieldId).then(data => data.data)
                   setAnswer([...answer, {
-                    content:content
+                    content:content,
+                    id:answersId.id
                   }])
                   setContent("")
               }}/>

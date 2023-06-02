@@ -29,7 +29,7 @@ function Form() {
     }, [form])
 
     useEffect(() => {
-      const timeoutID = setTimeout(() => UpdateForm(id, formsUrl, title, desc), 3000);
+      const timeoutID:NodeJS.Timeout = setTimeout(() => UpdateForm(id, formsUrl, title, desc), 3000);
       return () => clearTimeout(timeoutID);
     }, [title, desc]);
 
@@ -38,10 +38,10 @@ function Form() {
     } 
 
     return (
-      <div className="mb-10">
+      <div className="mb-10 ">
         <Header/>
 
-        <div className="flex items-strech fixed bottom-4 right-4 cursor-pointer opacity-75 hover:opacity-100 transition-all z-10" onClick={async() => {
+        <div className="flex items-strech fixed bottom-4 right-4 cursor-pointer opacity-75 hover:opacity-100 transition-all z-10 " onClick={async() => {
               await DeleteForm(id, formsUrl)
               TransitionHandler("/Forms", navigate)
             }}>
@@ -51,7 +51,7 @@ function Form() {
 
         <div className="xs:mx-3 sl:mx-6 flex items-center flex-col">
 
-          <div className="mb-6 xl:w-2/4  flex items-center flex-col p-4 shadow-lg rounded-md">
+          <div className="mb-6 xl:w-2/4  flex items-center flex-col p-4 shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md">
 
                   <input placeholder="Название формы" 
                     onChange={(event) => {setTitle(event.target.value)}} 

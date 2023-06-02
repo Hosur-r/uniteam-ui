@@ -17,16 +17,12 @@ export async function FormReq(url:string, id:number, setData:React.Dispatch<Reac
     })
 }
 
-export async function CreateForm(url:string, title:string, desc:string, setId:React.Dispatch<React.SetStateAction<IFormsList | undefined>>){
-    await axios.post(url, {"title": title, "desc": desc})
-    .then((res) => {
-        setId(res.data)
-    })
+export async function CreateForm(url:string, title:string, desc:string){
+    return await axios.post(url, {"title": title, "desc": desc})
 }
 
 export async function DeleteForm(id:number, url:string){
     await axios.delete(url + "/" + id)
-
 }
 
 export async function UpdateForm(id:number, url:string, title:string, desc:string){
@@ -37,7 +33,7 @@ export async function UpdateForm(id:number, url:string, title:string, desc:strin
 
 
 export async function CreateField(url:string, title:string, id:number){
-    await axios.post(url + "/" + id + "/fields", {"title": title})
+    return await axios.post(url + "/" + id + "/fields", {"title": title})
 }
 
 export async function DeleteField(url:string, id:number, fieldId:number){
@@ -52,7 +48,7 @@ export async function UpdateField(url:string, id:number, fieldId:number, title:s
 
 
 export async function CreateAnswer(url:string, content:string, id:number, fieldId:number){
-    await axios.post(url + "/" + id + "/fields/" + fieldId + "/answers", {"content": content})
+    return await axios.post(url + "/" + id + "/fields/" + fieldId + "/answers", {"content": content})
 }
 
 export async function DeleteAnswer(url:string, id:number, fieldId:number, answerId:number){

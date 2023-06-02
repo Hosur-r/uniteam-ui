@@ -14,7 +14,6 @@ import { TransitionHandler } from "../handlers"
     const [title, setTitle] = useState<string>("")
     const [desc, setDesc] = useState<string>("")
     const [open, setOpen] = useState<boolean>(false)
-    const [formId, setId] = useState<IFormsList>()
     const cancelButtonRef = useRef(null)
     const navigate = useNavigate()
 
@@ -25,10 +24,6 @@ import { TransitionHandler } from "../handlers"
     useEffect(() => {
         handler()
     }, [])
-
-    const createHandler = async() => {
-      await CreateForm(formsUrl, title, desc, setId)
-    }
 
     return (
     <div>
@@ -100,7 +95,7 @@ import { TransitionHandler } from "../handlers"
                           type="button"
                           className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
                           onClick={async() => {
-                            await createHandler()
+                            let formId = await CreateForm(formsUrl, title, desc).then(data => data.data)
                             setOpen(false)
                                 setListForms([...listForms, {
                                   title:title,
