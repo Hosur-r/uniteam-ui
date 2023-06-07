@@ -18,14 +18,14 @@ function Header(){
 
                     <li className={window.location.pathname === "/Forms" ? activeStyle : style} 
                     onClick={() => TransitionHandler("/Forms", navigate)}>
-                       Мои формы
+                        Формы
                     </li>
-                    <li className={window.location.pathname === "/Curces" ? activeStyle : style} 
-                    onClick={() => TransitionHandler("/Curces", navigate)}>
+                    <li className={window.location.pathname === "/Courses" ? activeStyle : style} 
+                    onClick={() => TransitionHandler("/Courses", navigate)}>
                         Курсы
                     </li>
-                    <li className={window.location.pathname === "/PersonalArea" ? activeStyle : style} 
-                    onClick={() => TransitionHandler("/PersonalArea", navigate)}>
+                    <li className={window.location.pathname === "/Profile" ? activeStyle : style} 
+                    onClick={() => TransitionHandler("/Profile", navigate)}>
                         Личный кабинет
                     </li>
 
