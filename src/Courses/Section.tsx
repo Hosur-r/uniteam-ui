@@ -24,10 +24,10 @@ function Section (props:any) {
     }, [section]);
 
     return (
-      <div className="block xs:w-full sm:w-[45vh] sl:w-[55vh] md:w-[60vw] lg:w-[45vw] max-w-[936px]">
-        <div className="flex items-center mb-6 w-full">
+      <div className="block max-w-[450px]">
+        <div className="mb-6 w-full relative">
           <input placeholder="Создать секцию" onChange={event => {setTitle(event.target.value)}} value={title} name="title" type="text" maxLength={50} autoComplete="on" className="w-full rounded-md border-0 py-1.5 my-2 pl-5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 xs:text-sm xs:leading-6"/>
-            <PlusCircleIcon className="w-7 h-7 text-indigo-500 opacity-60 hover:opacity-100 transition-all cursor-pointer" 
+            <PlusCircleIcon className="w-7 h-7 text-indigo-500 opacity-60 hover:opacity-100 transition-all cursor-pointer absolute right-0 bottom-3" 
             onClick={async() => {
                 let sectionId = await CreateSection(coursesUrl, title, props.id).then(data => data.data)
                 setSections([...sections, {
@@ -43,7 +43,7 @@ function Section (props:any) {
         {sections?.map((item:any, idx:number) => {
                
           return(
-            <div key={idx} className="w-full p-6 block relative mb-5 ">
+            <div key={idx} className="w-full  block relative mb-5 ">
               <div className="">
               <input placeholder="Название секции" 
                   onChange={(e) => {

@@ -17,7 +17,7 @@ function Material (props:any) {
     }, [props.materials])
 
     return (
-      <div className="w-full p-4">
+      <div className="w-full">
 
         {materials?.map((item:any, idx:number) => {
            {console.log(item)}
@@ -36,7 +36,7 @@ function Material (props:any) {
           )
         })}
 
-        <div className="flex items-center mb-2 w-full">
+        <div className="my-8 w-full relative">
                   <textarea placeholder="Добавить материал" wrap="soft" 
                       onChange={(e) => {
                           setContent(e.target.value)
@@ -46,7 +46,7 @@ function Material (props:any) {
                   </textarea>
               
               <PlusCircleIcon 
-              className="w-7 h-7 text-indigo-500 opacity-60 hover:opacity-100 transition-all cursor-pointer" 
+              className="w-7 h-7 text-indigo-500 opacity-60 hover:opacity-100 transition-all cursor-pointer absolute right-0 bottom-1" 
               onClick={async() => {
                   let materialId = await CreateMaterial(coursesUrl, content, props.id, props.sectionId, "string").then(data => data.data)
                   setMaterials([...materials, {
@@ -55,11 +55,10 @@ function Material (props:any) {
                     type:"string",
                   }])
                   setContent("")
-              }}/>
-              
-
+              }}/>   
         </div>
-              <div className="flex items-center  mb-2 w-full ">
+
+              <div className="mb-2 w-full relative">
                   <div className="p-8 w-full shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md">
                     <input type="file" className="text-sm" onChange={e => {
                            if (!e.target.files) return;
@@ -71,7 +70,7 @@ function Material (props:any) {
                 
              
                 <PlusCircleIcon 
-              className="w-7 h-7 text-indigo-500 opacity-60 hover:opacity-100 transition-all cursor-pointer" 
+              className="w-7 h-7 text-indigo-500 opacity-60 hover:opacity-100 transition-all cursor-pointer absolute right-0 bottom-8" 
               onClick={async() => {
                   let materialId = await CreateMaterial(coursesUrl, img, props.id, props.sectionId, "photo").then(data => data.data)
                   setMaterials([...materials, {
