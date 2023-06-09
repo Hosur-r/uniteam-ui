@@ -78,11 +78,11 @@ function Profile() {
            
 
                 <div className="shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md p-3 mb-8">
-                    <p className="p-1 text-center">MashykaMashyka</p>
+                    <p className="p-1 text-center">Andrew Semynin</p>
                 </div>
 
             <div className="shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md p-3 mb-4">
-                <p className="p-1">Email: fhjas@yandex.ru</p>        
+                <p className="p-1">E-mail: an.semynin@yandex.ru</p>        
                 <p className="p-1">Возраст: 18 лет</p>
             </div>
 

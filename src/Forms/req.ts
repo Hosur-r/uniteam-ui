@@ -66,3 +66,28 @@ export async function UpdateAnswer(url:string, content:string, id:number, fieldI
 //     )
 // }
 
+
+
+// export async function UpdateToken(url:string, refresh:string){
+//     await axios.put(url, {
+//         "token":refresh
+//     })
+// }
+
+// export async function SignUp(url:string, login:string, psw:string, email:string){
+//     await axios.post(url, {
+//         "login":login,
+//         "password":psw,
+//         "email":email
+//     })
+// }
+
+// export async function SignIn(url:string, login:string, psw:string){
+//     await axios.post(url, {
+//         "login":login,
+//         "password":psw,
+
+//     })
+// }
+
+

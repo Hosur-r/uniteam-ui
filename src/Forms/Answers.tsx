@@ -36,10 +36,13 @@ function Answers (props:any) {
                   defaultValue={item.content} name="title" type="text" maxLength={50} autoComplete="on" 
                   className="block w-full py-1.5 my-2 pl-2 xs:text-sm xs:leading-6 formInput"/>
               
-              <MinusCircleIcon className="w-4 h-4 text-red-500 opacity-60 hover:opacity-100 transition-all cursor-pointer ml-2" onClick={() => {
-                    DeleteAnswer(formsUrl, props.id, props.fieldId, item.id )
-                    setAnswer(answer.filter(obj => obj.id !== item.id))
-                  }}/>
+              <MinusCircleIcon 
+                className="w-4 h-4 text-red-500 opacity-60 hover:opacity-100 transition-all cursor-pointer ml-2" 
+                  onClick={() => {
+                        DeleteAnswer(formsUrl, props.id, props.fieldId, item.id )
+                        setAnswer(answer.filter(obj => obj.id !== item.id))
+                  }}
+                />
 
             </div>
           )

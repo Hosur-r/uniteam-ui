@@ -10,19 +10,24 @@ export interface IForm{
     title:string,
     fields?:[{
         answers?:[{
-            content?:string,
+            content:string,
         }],
-        title?:string,
+        title:string,
     }]
 }
 
 export interface IField{
     id?:number,
     title:string,
-    answer?:[{}]
+        answer?:[{
+            content:string,
+        }]
 }
 
 export interface IAnswer{
     id?:number,
     content:string,
 }
+
+
+
