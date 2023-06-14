@@ -7,28 +7,36 @@ import { useEffect, useState, Fragment, useRef } from "react"
 import { IFormsList } from "../Forms/models";
 import { ICoursesList } from "../Courses/models";
 import { CreateForm, ListForms } from "../Forms/req";
-import { CreateCourse } from "../Courses/req";
-import { formsUrl, coursesUrl } from "../App/Urls";
+import { CreateCourse, ListCourses } from "../Courses/req";
+import { formsUrl, coursesUrl, getProfileUrl } from "../App/Urls";
 
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
 import "./styles.css";
+
+import { TransitionHandler } from "../handlers";
+import { NavigateFunction, useNavigate } from "react-router-dom";
+import { IProfile } from "./models";
+import { GetProfile } from "./req";
 
 function Profile() {
 
     const [listForms, setListForms] = useState<IFormsList[]>([])
     const [listCourses, setListCourses] = useState<ICoursesList[]>([])
     const [serviceHandler, setServiseHandler] = useState<string>("")
+    const [profile, setProfile] = useState<IProfile>()
     const [title, setTitle] = useState<string>("")
     const [desc, setDesc] = useState<string>("")
     const [open, setOpen] = useState<boolean>(false)
     const cancelButtonRef = useRef(null)
+    const navigate:NavigateFunction = useNavigate()
 
     const handler = async () => {
+        await GetProfile(getProfileUrl, setProfile)
         await ListForms(formsUrl, setListForms)
+        await ListCourses(coursesUrl, setListCourses)
     }
 
     useEffect(() => {
@@ -41,11 +49,11 @@ function Profile() {
     }
 
     const formHandler = async() => {
-        let formId = await CreateForm(formsUrl, title, desc).then(data => data.data)
+        let formId = await CreateForm(formsUrl, title, desc, 0).then(data => data.data)
         setOpen(false)
             setListForms([...listForms, {
               title:title,
-              desc:desc,
+              description:desc,
               id:formId?.id
             }])
             setTitle("")
@@ -65,7 +73,6 @@ function Profile() {
             setDesc("")
     }
 
-
     return (
     <div className="">
         <Header/>
@@ -78,12 +85,12 @@ function Profile() {
            
 
                 <div className="shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md p-3 mb-8">
-                    <p className="p-1 text-center">Andrew Semynin</p>
+                    <p className="p-1 text-center">{profile?.username}</p>
                 </div>
 
             <div className="shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md p-3 mb-4">
-                <p className="p-1">E-mail: an.semynin@yandex.ru</p>        
-                <p className="p-1">Возраст: 18 лет</p>
+                <p className="p-1">E-mail: {profile?.email}</p>        
+                {/* <p className="p-1">Возраст: 18 лет</p> */}
             </div>
 
                 <div className="flex items-center shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md p-3 cursor-pointer hover:shadow-indigo-200 transition-all mb-4 relative">
@@ -97,9 +104,12 @@ function Profile() {
                            window.location.reload()
                     }} />
                 </div>
+                
                 <div className="flex items-center shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md p-3 cursor-pointer hover:shadow-indigo-200 transition-all mb-4">
                     <CogIcon className="h-8 w-8 text-indigo-500"/>
-                    <p className="ml-2">Сменить пароль</p> 
+                    <p className="ml-2" onClick={() => {
+                      TransitionHandler('/pswF', navigate)
+                    }}>Сменить пароль</p> 
                 </div>
 
                 <div className="flex items-center shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md p-3 cursor-pointer hover:shadow-indigo-200 transition-all mb-4" 
@@ -123,48 +133,67 @@ function Profile() {
 
         <div className="xs:max-lg:my-10 lg:ml-10 grow">
 
+            <p className="text-center font-medium text-lg mb-5">Созданные курсы</p> 
+            <div className="border w-full  border-indigo-300"></div>
+
             <div className="w-full h-80 p-6 mb-5 shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md">
-               <p className="text-center font-medium mb-2">Созданные курсы</p> 
+          
                <Swiper
                     pagination={{
                         dynamicBullets: true,
                     }}
                     navigation={ window.innerWidth >= 800 ? true : false}
                     modules={[Pagination, Navigation]}
-                    className="mySwiper"
+                    className="mySwiper lg:mt-5 min-w-[252px]"
                 >
-                    <SwiperSlide className="cursor-pointer">Slide 1</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 2</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 3</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 4</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 5</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 6</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 7</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 8</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 9</SwiperSlide>
+                              <div className="flex flex-wrap max-w-[90rem] relative xs:justify-center lg:justify-start">
+                                {listCourses?.map((item, idx) => 
+                                  <SwiperSlide key={idx} 
+                                      onClick={() => {
+                                        TransitionHandler(`/course/${item.id}`, navigate)
+                                      }} 
+                                    className="cursor-pointer">
+
+                                      <p className="text-lg font-medium">{item?.title}</p> 
+                                      <p className="text-sm font-light text-gray-400">{item?.description}</p> 
+                                      
+                                    </SwiperSlide>
+                                  )
+                                }
+                              </div>
                 </Swiper>
 
             </div>
 
+                  <p className="text-center font-medium text-lg mb-5 mt-11">Созданные формы</p> 
+                  <div className="border w-full  border-indigo-300"></div>
+
                 <div className="w-full grow h-80 p-6 mb-5 shadow-lg shadow-indigo-50  border border-indigo-50 rounded-md">
-                    <p className="text-center font-medium">Созданные формы</p> 
                     <Swiper
                     pagination={{
                         dynamicBullets: true,
                     }}
                     navigation={window.innerWidth >= 800 ? true : false}
                     modules={[Pagination, Navigation]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide className="cursor-pointer">Slide 1</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 2</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 3</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 4</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 5</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 6</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 7</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 8</SwiperSlide>
-                    <SwiperSlide className="cursor-pointer">Slide 9</SwiperSlide>
+                    className="mySwiper lg:mt-5 min-w-[252px]"
+                    >
+                          <div className="flex flex-wrap max-w-[90rem] relative xs:justify-center lg:justify-start">
+                            
+                              {listForms?.map((item, idx) => 
+                                <SwiperSlide key={idx} 
+                                    onClick={() => {
+                                      TransitionHandler(`/form/${item.id}`, navigate)
+                                    }} 
+                                  className="cursor-pointer flex flex-col items-center">
+
+                                    <p className="text-lg font-medium">{item.title}</p> 
+                                    <p className="text-sm font-light text-gray-400">{item?.description}</p> 
+                                    
+                                  </SwiperSlide>
+                                )}
+
+                          {/* НЕ РАБТАЕТ ОТСУТСТВИЕ ФОРМ!!!!!!!! */}
+                              </div>
                 </Swiper>
                 </div>
          

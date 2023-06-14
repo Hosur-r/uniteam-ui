@@ -16,16 +16,16 @@ function Header(){
                 <h1 className="flex items-center bigText cursor-pointer">{SvgLogo} UNIVERSITY.Inc</h1>
                 <ul className="flex items-center xs:max-sl:flex-col px-4 sl:space-x-6 text">
 
-                    <li className={window.location.pathname === "/Forms" ? activeStyle : style} 
-                    onClick={() => TransitionHandler("/Forms", navigate)}>
+                    <li className={window.location.pathname === "/forms" ? activeStyle : style} 
+                    onClick={() => TransitionHandler("/forms", navigate)}>
                         Формы
                     </li>
-                    <li className={window.location.pathname === "/Courses" ? activeStyle : style} 
-                    onClick={() => TransitionHandler("/Courses", navigate)}>
+                    <li className={window.location.pathname === "/courses" ? activeStyle : style} 
+                    onClick={() => TransitionHandler("/courses", navigate)}>
                         Курсы
                     </li>
-                    <li className={window.location.pathname === "/Profile" ? activeStyle : style} 
-                    onClick={() => TransitionHandler("/Profile", navigate)}>
+                    <li className={window.location.pathname === "/profile" ? activeStyle : style} 
+                    onClick={() => TransitionHandler("/profile", navigate)}>
                         Личный кабинет
                     </li>
 

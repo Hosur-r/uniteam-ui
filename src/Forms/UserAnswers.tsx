@@ -1,31 +1,40 @@
-
 import { useEffect, useState } from "react"
 import { IAnswer } from "./models"
-
+import { PushHistory } from "./req";
+import { historyUrl } from "../App/Urls";
 
 function UserAnswers (props:any) {
 
+  let path:string = window.location.pathname.slice(10)
   const [answer, setAnswer] = useState<IAnswer[]>([])
+  const [value, setValue] = useState<string>('');
 
-    useEffect(() => {
-      props.answer ? setAnswer(props.answer) : setAnswer([])
-    }, [props.answer])
+  useEffect(() => {
+    props.answer ? setAnswer(props.answer) : setAnswer([])
+  }, [props.answer])
 
 
     return (
-      <div className="w-full p-4">
-
+      <div className="w-full p-4 relative">
         {answer?.map((item:any, idx:number) => {
           return(
             <div key={idx} className="flex items-center mb-1 pl-3 w-full" >
                 <div className="flex items-center">
-                    <input type="radio" />
+                    <input type="radio" name="answer" value={item.content} onChange={() => setValue(item.id)}/>
                     <p className="mb-1 ml-1">{item.content}</p>
                 </div>
-           
             </div>
           )
         })}
+              {value ? <p 
+              onClick={() => {
+                  PushHistory(historyUrl, path,  value)
+              }} 
+              className="absolute bottom-0 right-5 cursor-pointer transition-all rounded-md
+               bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6
+                text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
+                focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >Отправить ответ</p> : <></>}
         </div>
     )
   }

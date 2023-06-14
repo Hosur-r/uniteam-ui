@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
-import { IField } from "./models"
+import { IQuestion} from "./models"
 import UserAnswers from "./UserAnswers"
 
 
 function UserFields (props:any) {
 
-  const [fields, setFields] = useState<IField[]>([])
+  const [fields, setFields] = useState<IQuestion[]>([])
 
     useEffect(() => {
-      props.fields ? setFields(props.fields) : setFields([])
-    }, [props.fields])
+      props.questions ? setFields(props.questions) : setFields([])
+    }, [props.questions])
 
 
     return (
@@ -22,7 +22,7 @@ function UserFields (props:any) {
                 <p className="text-center font-medium">{item.title}</p>          
               </div>
               
-              <UserAnswers answer = {item?.answers} id = {props.id} fieldId = {item?.id}/>
+              <UserAnswers answer = {item?.answers} questionId = {item.id}/>
             </div>
             
           )

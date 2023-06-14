@@ -43,7 +43,7 @@ function Course() {
 
         <div className="flex items-strech fixed bottom-4 right-4 cursor-pointer opacity-75 hover:opacity-100 transition-all z-10 " onClick={async() => {
               await DeleteCourse(id, coursesUrl)
-              TransitionHandler("/Courses", navigate)
+              TransitionHandler("/courses", navigate)
             }}>
                 <p className="text-sm px-2 text-gray-900">Удалить курс</p>
                 <DocumentMinusIcon className="h-6 w-6 text-red-600"/>

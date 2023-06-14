@@ -1,24 +1,24 @@
 import Answers from "./Answers"
-import { CreateField, DeleteField, UpdateField } from "./req"
-import { formsUrl } from "../App/Urls"
+import { CreateQuestion, DeleteQuestion, UpdateQuestion } from "./req"
+import { questionUrl } from "../App/Urls"
 import { useEffect, useState } from "react"
-import { IField } from "./models"
+import { IQuestion } from "./models"
 import { TrashIcon, PlusCircleIcon } from "@heroicons/react/24/solid"
 
 function Fields (props:any) {
 
   const [title, setTitle] = useState("")
   const [field, setField] = useState("")
-  const [fieldId, setFieldId] = useState<number>(0)
-  const [fields, setFields] = useState<IField[]>([])
+  const [fieldId, setFieldId] = useState<any>('')
+  const [fields, setFields] = useState<IQuestion[]>([])
 
     useEffect(() => {
-      props.fields ? setFields(props.fields) : setFields([])
-    }, [props.fields])
+      props.questions ? setFields(props.questions) : setFields([])
+    }, [props.questions])
 
     useEffect(() => {
-      if(fieldId !== 0 ){
-        const timeoutID2:NodeJS.Timeout = setTimeout(() => UpdateField(formsUrl, props.id, fieldId, field), 3000);
+      if(fieldId){
+        const timeoutID2:NodeJS.Timeout = setTimeout(() => UpdateQuestion(questionUrl, fieldId, field, "3123", true, 0), 3000);
         return () => {clearTimeout(timeoutID2)}
       }
     }, [field]);
@@ -26,15 +26,23 @@ function Fields (props:any) {
     return (
       <div className="block xs:w-full sm:w-[45vh] sl:w-[55vh] md:w-[60vw] lg:w-[45vw] max-w-[936px]">
         <div className="flex items-center mb-6 w-full">
-          <input placeholder="Создать вопрос" onChange={event => {setTitle(event.target.value)}} value={title} name="title" type="text" maxLength={50} autoComplete="on" className="w-full rounded-md border-0 py-1.5 my-2 pl-5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 xs:text-sm xs:leading-6"/>
+
+          <input placeholder="Создать вопрос" onChange={event => {setTitle(event.target.value)}} value={title} name="title" type="text" maxLength={50} autoComplete="on" 
+          className="w-full rounded-md border-0 py-1.5 my-2 pl-5 text-gray-900 ring-1 ring-inset
+           ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 
+           xs:text-sm xs:leading-6"/>
+
             <PlusCircleIcon className="w-7 h-7 text-indigo-500 opacity-60 hover:opacity-100 transition-all cursor-pointer" onClick={async() => {
-                let fieldId = await CreateField(formsUrl, title, props.id).then(data => data.data)
+                let fieldId = await CreateQuestion(questionUrl, props.FormId, title, "3123", true, 0).then(data => data.data)
                 setFields([...fields, {
-                title:title,
-                id:fieldId?.id
+                  title:title,
+                  id:fieldId?.id,
+                  required:true,
+                  type:1,
                 }])
                 setTitle("")
             }}/>
+            
         </div>
       
 
@@ -51,14 +59,12 @@ function Fields (props:any) {
                 className="block w-full py-1.5 my-2 pl-2 xs:text-sm xs:leading-6 formInput"/>
               
                 <TrashIcon className="w-[1.10rem] h-[1.10rem] top-1 right-4 text-red-500 opacity-60 hover:opacity-100 transition-all cursor-pointer absolute" onClick={() => {
-                  DeleteField(formsUrl, props.id, item.id)
-                  setFields(fields.filter(obj => obj.id !== item.id))
+                    DeleteQuestion(questionUrl, item.id)
+                    setFields(fields.filter(obj => obj.id !== item.id))
                   }}/>
               </div>
               
-
-
-              <Answers answer = {item?.answers} id = {props.id} fieldId = {item?.id}/>
+              <Answers answer = {item?.answers} questionId = {item.id}/>
             </div>
             
           )

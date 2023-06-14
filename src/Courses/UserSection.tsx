@@ -16,7 +16,7 @@ function UserSection (props:any) {
         {sections?.map((item:any, idx:number) => {
                
           return(
-            <div key={idx} className="w-full  block relative mb-5 ">
+            <div key={idx} className="w-full block relative mb-5 ">
               <div className="mb-4">
                     <p className="font-medium pb-1">{item.title}</p>
                     <div className="border w-full  border-indigo-300"></div>

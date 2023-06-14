@@ -1,4 +1,4 @@
-import { formsUrl } from "../App/Urls"
+import { answerUrl } from "../App/Urls"
 import { useEffect, useState } from "react"
 import { CreateAnswer, DeleteAnswer, UpdateAnswer } from "./req"
 import { IAnswer } from "./models"
@@ -8,7 +8,7 @@ function Answers (props:any) {
 
   const [content, setContent] = useState("")
   const [answer, setAnswer] = useState<IAnswer[]>([])
-  const [answerId, setAnswerId] = useState<number>(0)
+  const [answerId, setAnswerId] = useState<string>('')
   const [answerValue, setAnswerValue] = useState("")
 
     useEffect(() => {
@@ -16,8 +16,8 @@ function Answers (props:any) {
     }, [props.answer])
 
     useEffect(() => {
-      if(answerId !== 0 ){
-        const timeoutID2 = setTimeout(() => UpdateAnswer(formsUrl, answerValue, props.id, props.fieldId, answerId), 3000);
+      if(answerId){
+        const timeoutID2 = setTimeout(() => UpdateAnswer(answerUrl, answerId, answerValue, true, 0), 3000);
         return () => {clearTimeout(timeoutID2)}
       }
     }, [answerValue]);
@@ -39,7 +39,7 @@ function Answers (props:any) {
               <MinusCircleIcon 
                 className="w-4 h-4 text-red-500 opacity-60 hover:opacity-100 transition-all cursor-pointer ml-2" 
                   onClick={() => {
-                        DeleteAnswer(formsUrl, props.id, props.fieldId, item.id )
+                        DeleteAnswer(answerUrl, item.id)
                         setAnswer(answer.filter(obj => obj.id !== item.id))
                   }}
                 />
@@ -54,10 +54,12 @@ function Answers (props:any) {
               <PlusCircleIcon 
               className="w-7 h-7 text-indigo-500 opacity-60 hover:opacity-100 transition-all cursor-pointer" 
               onClick={async() => {
-                  let answersId = await CreateAnswer(formsUrl, content, props.id, props.fieldId).then(data => data.data)
+                  let answersId = await CreateAnswer(answerUrl, props.questionId, content, true, 0).then(data => data.data)
                   setAnswer([...answer, {
                     content:content,
-                    id:answersId.id
+                    id:answersId.id,
+                    cost:100,
+                    right:true,
                   }])
                   setContent("")
               }}/>

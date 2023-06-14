@@ -39,9 +39,14 @@ import { bg_1, bg_2, bg_3 } from "../media/svgIcons"
 
         <div className="flex flex-wrap max-w-[90rem] relative xs:justify-center lg:justify-start ">
             {listCourses?.map((item, idx) => 
-              <div key={idx} onClick={() => {TransitionHandler(`/Course/${item.id}`, navigate)}} className="overflow-hidden w-72 h-64 p-3 mr-5 my-6 shadow-lg shadow-indigo-50 hover:shadow-indigo-200 hover:scale-105 cursor-pointer border border-indigo-50 rounded-md transition-all relative">
+              <div key={idx} onClick={() => {TransitionHandler(`/course/${item.id}`, navigate)}} 
+              className="overflow-hidden w-72 h-64 p-3 mr-5 my-6 shadow-lg shadow-indigo-50 hover:shadow-indigo-200 hover:scale-105 
+              cursor-pointer border border-indigo-50 rounded-md transition-all relative">
+
                   <p className="text-lg font-medium absolute bottom-3 left-3">{item?.title}</p> 
-                  <div className="-z-20 absolute left-0 opacity-40 hover:opacity-100 transition-all">{Math.floor(Math.random() * (3 - 1 + 1) + 1) === 1 ? bg_1 : Math.floor(Math.random() * (3 - 1 + 1) + 1) === 2 ? bg_2 : bg_3}</div>
+                  <div className="-z-20 absolute left-0 opacity-40 hover:opacity-100 transition-all">
+                    {Math.floor(Math.random() * (3 - 1 + 1) + 1) === 1 ? bg_1 : Math.floor(Math.random() * (3 - 1 + 1) + 1) === 2 ? bg_2 : bg_3}
+                    </div>
                 </div>
               )}
               <div className="flex items-strech fixed bottom-8 right-9 cursor-pointer opacity-75 hover:opacity-100 transition-all" onClick={() => {setOpen(true)}}>

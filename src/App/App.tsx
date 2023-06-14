@@ -8,12 +8,14 @@ import ForgotPsw from '../Entrance/ForgotPsw';
 import Forms from '../Forms/Forms';
 import Form from '../Forms/Form';
 import UserForm from '../Forms/UserForm';
+import Analytic from '../Forms/FormAnalytics/Analytic';
 
 import Courses from '../Courses/Courses';
 import Course from '../Courses/Course';
 import UserCourse from '../Courses/UserCourse';
 
 import Profile from '../Profile/Profile';
+
 
 function App() {
   return (
@@ -23,15 +25,16 @@ function App() {
         <Route path='/' element={<Authorization/>}></Route>
         <Route path='/pswF' element={<ForgotPsw/>}></Route>
 
-        <Route path='/Forms' element={<Forms/>}></Route>
-        <Route path='/Form/:id' element={<Form/>}></Route>
-        <Route path='/UserForm/:id' element={<UserForm/>}></Route>
+        <Route path='/forms' element={<Forms/>}></Route>
+        <Route path='/form/:id' element={<Form/>}></Route>
+        <Route path='/userform/:id' element={<UserForm/>}></Route>
+        <Route path='/analytics/:id' element={<Analytic/>}></Route>
 
-        <Route path='/Courses' element={<Courses/>}></Route>
-        <Route path='/Course/:id' element={<Course/>}></Route>
-        <Route path='/UserCourse/:id' element={<UserCourse/>}></Route>
+        <Route path='/courses' element={<Courses/>}></Route>
+        <Route path='/course/:id' element={<Course/>}></Route>
+        <Route path='/usercourse/:id' element={<UserCourse/>}></Route>
 
-        <Route path='/Profile' element={<Profile/>}></Route>
+        <Route path='/profile' element={<Profile/>}></Route>
       </Routes>
     </div>
   );

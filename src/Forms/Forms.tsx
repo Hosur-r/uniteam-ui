@@ -3,7 +3,6 @@ import { formsUrl } from "../App/Urls"
 import { ListForms } from "./req"
 import { useEffect, useState } from "react"
 import { IFormsList } from "./models"
-import { DocumentPlusIcon } from '@heroicons/react/24/solid'
 import { useNavigate } from "react-router-dom"
 import { TransitionHandler } from "../handlers"
 
@@ -36,13 +35,13 @@ import { TransitionHandler } from "../handlers"
             {listForms?.map((item, idx) => 
               <div key={idx} 
                   onClick={() => {
-                    TransitionHandler(`/Form/${item.id}`, navigate)
+                    TransitionHandler(`/userform/${item.id}`, navigate)
                   }} 
                 className="w-52 h-64 p-3 mr-5 my-6 shadow-lg shadow-indigo-50 hover:shadow-indigo-200 hover:scale-105 
                 cursor-pointer border border-indigo-50 rounded-md transition-all">
 
                   <p className="text-lg font-medium">{item?.title}</p> 
-                  <p className="text-sm font-light text-gray-400">{item?.desc}</p> 
+                  <p className="text-sm font-light text-gray-400">{item?.description}</p> 
                   
                 </div>
               )}
