@@ -96,7 +96,7 @@ export async function UpdateAnswer(url:string, answerId:string, content:string, 
 export async function PushHistory(url:string, formId:string, selected:string){
     await axios.post(url, {
         "form": formId,
-        "selected":selected,
+        'selected':selected,
     })
 }
 

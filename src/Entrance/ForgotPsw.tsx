@@ -13,7 +13,6 @@ function ForgotPsw(){
     const[control, setControl] = useState<string>('')
     const[newPsw, setNewPsw] = useState<string>('')
     const navigate:NavigateFunction = useNavigate()
-
     return(
     <div>
         <div className="context z-10">
@@ -39,6 +38,7 @@ function ForgotPsw(){
                                     }
                                 }}
                             >Сменить пароль</button> 
+                              {/* <p className="mt-2 text-center text-sm text-gray-500"><a href="" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500" onClick={() => navigate(-1)}>Вернуться назад</a></p> */}
                 </div>
             </div>
         </div>

@@ -108,3 +108,8 @@ export interface IAnalytic{
         }
     ]
 }
+
+
+export interface IUserAnswer{
+    selected:string
+}

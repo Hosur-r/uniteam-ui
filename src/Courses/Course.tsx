@@ -24,7 +24,7 @@ function Course() {
     useEffect(() => {
       if(course){
         setTitle(course.title)
-        // setDesc(course.desc)
+        setDesc(course.description)
       }
     }, [course])
 

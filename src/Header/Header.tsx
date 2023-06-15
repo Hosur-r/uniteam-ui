@@ -2,7 +2,7 @@ import "./HeaderStyle.css"
 import { SvgLogo } from "../media/svgIcons"
 import { TransitionHandler } from "../handlers"
 import { useNavigate } from "react-router-dom"
-import {ArrowLeftOnRectangleIcon} from '@heroicons/react/24/solid'
+import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid'
 
 function Header(){
 
@@ -30,7 +30,13 @@ function Header(){
                     </li>
 
                 </ul>
-                <ArrowLeftOnRectangleIcon className="w-7 h-7 text-indigo-500 cursor-pointer opacity-75 hover:opacity-100 transition-all"/>
+                <ArrowLeftOnRectangleIcon 
+                className="w-7 h-7 text-indigo-500 cursor-pointer opacity-75 hover:opacity-100 transition-all"
+                onClick={() => {
+                    TransitionHandler('/', navigate)
+                    localStorage.removeItem('access')
+                }}
+                />
             </div>
         </div>
     )

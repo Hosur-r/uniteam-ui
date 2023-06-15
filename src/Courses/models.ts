@@ -7,7 +7,7 @@ export interface ICoursesList{
 
 export interface ICourse{
     title:string,
-    desc?:string,
+    description:string,
     sections?:[{
         id: number,
         title: string,

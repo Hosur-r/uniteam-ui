@@ -8,8 +8,8 @@ import { IFormsList } from "../Forms/models";
 import { ICoursesList } from "../Courses/models";
 import { CreateForm, ListForms } from "../Forms/req";
 import { CreateCourse, ListCourses } from "../Courses/req";
-import { formsUrl, coursesUrl, getProfileUrl } from "../App/Urls";
-
+import { formsUrl, coursesUrl, getProfileUrl, changeUrl } from "../App/Urls";
+import { lastName, firstName } from "./req";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -19,7 +19,7 @@ import "./styles.css";
 import { TransitionHandler } from "../handlers";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { IProfile } from "./models";
-import { GetProfile } from "./req";
+import { GetProfile, UpdateImage } from "./req";
 
 function Profile() {
 
@@ -30,6 +30,8 @@ function Profile() {
     const [title, setTitle] = useState<string>("")
     const [desc, setDesc] = useState<string>("")
     const [open, setOpen] = useState<boolean>(false)
+    const [name, setName] = useState<string>("")
+    const [surname, setSurname] = useState<string>("")
     const cancelButtonRef = useRef(null)
     const navigate:NavigateFunction = useNavigate()
 
@@ -73,6 +75,21 @@ function Profile() {
             setDesc("")
     }
 
+    useEffect(() => {
+      if(name){
+        const timeoutID2:NodeJS.Timeout = setTimeout(() => firstName(changeUrl, localStorage.getItem('access'), name), 3000);
+        return () => {clearTimeout(timeoutID2)}
+      }
+    }, [name]);
+
+    useEffect(() => {
+      if(surname){
+        const timeoutID2:NodeJS.Timeout = setTimeout(() => lastName(changeUrl, localStorage.getItem('access'), surname), 3000);
+        return () => {clearTimeout(timeoutID2)}
+      }
+    }, [surname]);
+
+
     return (
     <div className="">
         <Header/>
@@ -80,7 +97,7 @@ function Profile() {
 
         <div>
                 <div className="overflow-hidden">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4794/4794936.png" alt="" width={300} height={300} className="shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md p-3 mb-2"/>
+                    { profile?.profile !== 'http://sso.uni-team-inc.online/static/123' ? <img src={profile?.profile} alt="" width={300} height={300} className="shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md p-3 mb-2"/> : <img src="https://cdn-icons-png.flaticon.com/512/4794/4794936.png" alt="123" width={300} height={300} className="shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md p-3 mb-2"/>}
                 </div>
            
 
@@ -90,18 +107,22 @@ function Profile() {
 
             <div className="shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md p-3 mb-4">
                 <p className="p-1">E-mail: {profile?.email}</p>        
-                {/* <p className="p-1">Возраст: 18 лет</p> */}
+                <input placeholder="Имя" onChange={event => {setName(event.target.value)}} defaultValue={profile?.first_name === "Не назначено" ? name : profile?.first_name} name="title" type="text" autoComplete="on" maxLength={18} className="block w-full py-1.5 my-3 pl-2 xs:text-sm xs:leading-6 formInput"/>
+                <input placeholder="Фамилия" onChange={event => {setSurname(event.target.value)}} defaultValue={profile?.last_name === "Не назначено" ? surname : profile?.last_name} name="title" type="text" autoComplete="on" maxLength={18} className="block w-full py-1.5 my-3 pl-2 xs:text-sm xs:leading-6 formInput"/>
             </div>
 
                 <div className="flex items-center shadow-lg shadow-indigo-50 border border-indigo-50 rounded-md p-3 cursor-pointer hover:shadow-indigo-200 transition-all mb-4 relative">
                     <PhotoIcon className="h-8 w-8 text-indigo-500 cursor-pointer"/>
                     <p className="ml-2 cursor-pointer">Изменить аватар</p> 
-                    <input type="file"  className="text-sm absolute opacity-0 cursor-pointer " onChange={e => {
-                           if (!e.target.files) return;
-                           var reader = new FileReader();
-                           reader.readAsDataURL(e.target.files[0]);
-                        //    reader.onload = () => {setImg(reader.result)}
-                           window.location.reload()
+                    <input type="file"  className="text-sm absolute opacity-0 cursor-pointer " onChange={(e) => {
+
+                              if (!e.target.files) return;
+                              var reader = new FileReader();
+                              reader.readAsDataURL(e.target.files[0]);
+                              reader.onload = async() => {
+                                await UpdateImage(changeUrl, localStorage.getItem('access'), reader.result, 'profile')  
+                              }
+                              window.location.reload() 
                     }} />
                 </div>
                 
@@ -155,7 +176,7 @@ function Profile() {
                                     className="cursor-pointer">
 
                                       <p className="text-lg font-medium">{item?.title}</p> 
-                                      <p className="text-sm font-light text-gray-400">{item?.description}</p> 
+                                      {/* <p className="text-sm font-light text-gray-400">{item?.description}</p>  */}
                                       
                                     </SwiperSlide>
                                   )

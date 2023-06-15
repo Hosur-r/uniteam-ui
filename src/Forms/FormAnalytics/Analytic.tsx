@@ -40,7 +40,7 @@ function Analytic() {
                   {analytic?.histories.map((item, idx) => {
                     return(
                       <div key={idx}>
-                          <p className="py-3 font-medium">Вопрос: Сколько лет?</p>
+                          <p className="py-3 font-medium">Вопрос: </p>
                           {/* <p>{item.created}</p> */}
                           <Selected selected = {item.selected}/>
                       </div>

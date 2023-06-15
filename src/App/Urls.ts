@@ -13,4 +13,4 @@ export const signUpUrl:string = "http://sso.uni-team-inc.online/sign-up"
 export const rememberPswUrl:string = "http://sso.uni-team-inc.online/remember"
 export const getProfileUrl:string = "http://sso.uni-team-inc.online/user/"
 
-export const changePswUrl:string = "http://sso.uni-team-inc.online/change"
+export const changeUrl:string = "http://sso.uni-team-inc.online/change"
