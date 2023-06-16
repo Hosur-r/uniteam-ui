@@ -1,6 +1,8 @@
 
     // V 1.0.0
 
+import { createSlice } from "@reduxjs/toolkit"
+
 // export interface IFormsList{
 //     id?:number,
 //     title:string,
@@ -113,3 +115,5 @@ export interface IAnalytic{
 export interface IUserAnswer{
     selected:string
 }
+
+

@@ -41,7 +41,7 @@ function Course() {
       <div className="mb-10 ">
         <Header/>
 
-        <div className="flex items-strech fixed bottom-4 right-4 cursor-pointer opacity-75 hover:opacity-100 transition-all z-10 " onClick={async() => {
+        <div className="flex items-strech fixed bottom-4 right-4 cursor-pointer opacity-75 hover:opacity-100 transition-all z-10" onClick={async() => {
               await DeleteCourse(id, coursesUrl)
               TransitionHandler("/courses", navigate)
             }}>

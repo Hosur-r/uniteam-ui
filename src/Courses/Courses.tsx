@@ -39,7 +39,7 @@ import { bg_1, bg_2, bg_3 } from "../media/svgIcons"
 
         <div className="flex flex-wrap max-w-[90rem] relative xs:justify-center lg:justify-start ">
             {listCourses?.map((item, idx) => 
-              <div key={idx} onClick={() => {TransitionHandler(`/course/${item.id}`, navigate)}} 
+              <div key={idx} onClick={() => {TransitionHandler(`/usercourse/${item.id}`, navigate)}} 
               className="overflow-hidden w-72 h-64 p-3 mr-5 my-6 shadow-lg shadow-indigo-50 hover:shadow-indigo-200 hover:scale-105 
               cursor-pointer border border-indigo-50 rounded-md transition-all relative">
 
@@ -49,10 +49,6 @@ import { bg_1, bg_2, bg_3 } from "../media/svgIcons"
                     </div>
                 </div>
               )}
-              <div className="flex items-strech fixed bottom-8 right-9 cursor-pointer opacity-75 hover:opacity-100 transition-all" onClick={() => {setOpen(true)}}>
-                  <p className="text-lg px-2 text-gray-900">Создать курс</p>
-                  <FolderPlusIcon className="h-8 w-8 text-indigo-600" />
-              </div>
         </div>
 
 

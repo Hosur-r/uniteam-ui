@@ -100,8 +100,6 @@ export async function PushHistory(url:string, formId:string, selected:string){
     })
 }
 
-
-
 export async function GetAnalytics(url:string, formId:string, setData:React.Dispatch<React.SetStateAction<IAnalytic | undefined>>){
     await axios.get(url + "/" + formId )
     .then(data => {

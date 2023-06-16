@@ -2,15 +2,14 @@ import { useEffect, useState } from "react"
 import { IQuestion} from "./models"
 import UserAnswers from "./UserAnswers"
 
-
 function UserFields (props:any) {
 
   const [fields, setFields] = useState<IQuestion[]>([])
+  let inputName:number = 0 
 
     useEffect(() => {
       props.questions ? setFields(props.questions) : setFields([])
     }, [props.questions])
-
 
     return (
       <div className="block xs:w-full sm:w-[45vh] sl:w-[55vh] md:w-[60vw] lg:w-[45vw] ">      
@@ -21,16 +20,13 @@ function UserFields (props:any) {
               <div className="">
                 <p className="text-center font-medium">{item.title}</p>          
               </div>
-              
-              <UserAnswers answer = {item?.answers} questionId = {item.id}/>
+                <UserAnswers inputName = {inputName += 1} answer = {item?.answers} questionId = {item.id}/>
             </div>
-            
           )
         })}
 
       </div>
     )
   }
-
 
 export default UserFields
