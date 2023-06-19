@@ -16,11 +16,10 @@ export async function SignUp(url:string, username:string, password:string, email
 }
 
 export async function SignIn(url:string, username:string, password:string){
-    return await axios.put(url, {
-        "username":username,
-        "password":password,
-
-    })
+        return await axios.put(url, {
+            "username":username,
+            "password":password,
+        })
 }
 
 export async function RememberPsw(url:string, username:string, control:string, newPsw:string){

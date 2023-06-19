@@ -22,7 +22,7 @@ function Material (props:any) {
         {materials?.map((item:any, idx:number) => {
            {console.log(item)}
           return(
-            <div key={idx} className=" mb-1 pl-3 w-full" >
+            <div key={idx} className="mb-1 pl-3 w-full" >
 
                 {item.type == "string" ? <p className="mt-2 max-w-[828.89px]">{item.content}</p> : <img src={`http://courses.uni-team-inc.online/${item.content}`} alt="material image" />}
                

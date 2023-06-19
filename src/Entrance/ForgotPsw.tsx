@@ -23,7 +23,7 @@ function ForgotPsw(){
                         <div className="flex flex-wrap justify-center">
                             <input placeholder="Логин" onChange={event => {setLogin(event.target.value)}} value={login} name="name" type="text" autoComplete="on" className="block w-full rounded-md border-0 py-1.5 my-2 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                             <input placeholder="Контрольный вопрос" onChange={event => {setControl(event.target.value)}} value={control} name="name" type="text" autoComplete="on" className="block w-full rounded-md border-0 py-1.5 my-2 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                            <input placeholder="Новый пароль" onChange={event => {setNewPsw(event.target.value)}} value={newPsw} name="name" type="text" autoComplete="on" className="block w-full rounded-md border-0 py-1.5 my-2 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                            <input placeholder="Новый пароль" onChange={event => {setNewPsw(event.target.value)}} value={newPsw} name="name" type="password" autoComplete="on" className="block w-full rounded-md border-0 py-1.5 my-2 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                         </div>
                             <button 
                             className="mt-8 mb-2 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 
@@ -31,14 +31,15 @@ function ForgotPsw(){
                             focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 onClick={async() => {
                                     let req = await RememberPsw(rememberPswUrl, login, control, newPsw).then(data => data)
-                                    if(req.status === 201){
-                                        TransitionHandler("/profile", navigate)
+                                    if(req.status === 200){
+                                        TransitionHandler("/", navigate)
+                                        localStorage.removeItem('access')
+                                        localStorage.removeItem('refresh')
                                     }else{
                                         TransitionHandler("/pswF", navigate)
                                     }
                                 }}
                             >Сменить пароль</button> 
-                              {/* <p className="mt-2 text-center text-sm text-gray-500"><a href="" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500" onClick={() => navigate(-1)}>Вернуться назад</a></p> */}
                 </div>
             </div>
         </div>

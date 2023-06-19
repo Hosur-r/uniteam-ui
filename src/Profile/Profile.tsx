@@ -5,10 +5,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Dialog, Transition } from '@headlessui/react'
 import { useEffect, useState, Fragment, useRef } from "react"
 import { IFormsList } from "../Forms/models";
+import { ListFormsByAuthor } from "./req";
 import { ICoursesList } from "../Courses/models";
-import { CreateForm, ListForms } from "../Forms/req";
+import { CreateForm } from "../Forms/req";
 import { CreateCourse, ListCourses } from "../Courses/req";
-import { formsUrl, coursesUrl, getProfileUrl, changeUrl } from "../App/Urls";
+import { formsUrl, coursesUrl, getProfileUrl, changeUrl, updateTokenUrl } from "../App/Urls";
 import { lastName, firstName } from "./req";
 
 import "swiper/css";
@@ -20,6 +21,7 @@ import { TransitionHandler } from "../handlers";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { IProfile } from "./models";
 import { GetProfile, UpdateImage } from "./req";
+
 
 function Profile() {
 
@@ -35,9 +37,10 @@ function Profile() {
     const cancelButtonRef = useRef(null)
     const navigate:NavigateFunction = useNavigate()
 
+
     const handler = async () => {
         await GetProfile(getProfileUrl, setProfile)
-        await ListForms(formsUrl, setListForms)
+        await ListFormsByAuthor(formsUrl, setListForms)
         await ListCourses(coursesUrl, setListCourses)
     }
 
@@ -77,14 +80,14 @@ function Profile() {
 
     useEffect(() => {
       if(name){
-        const timeoutID2:NodeJS.Timeout = setTimeout(() => firstName(changeUrl, localStorage.getItem('access'), name), 3000);
+        const timeoutID2:NodeJS.Timeout = setTimeout(() => firstName(changeUrl, name), 1500);
         return () => {clearTimeout(timeoutID2)}
       }
     }, [name]);
 
     useEffect(() => {
       if(surname){
-        const timeoutID2:NodeJS.Timeout = setTimeout(() => lastName(changeUrl, localStorage.getItem('access'), surname), 3000);
+        const timeoutID2:NodeJS.Timeout = setTimeout(() => lastName(changeUrl, surname), 1500);
         return () => {clearTimeout(timeoutID2)}
       }
     }, [surname]);
@@ -120,7 +123,7 @@ function Profile() {
                               var reader = new FileReader();
                               reader.readAsDataURL(e.target.files[0]);
                               reader.onload = async() => {
-                                await UpdateImage(changeUrl, localStorage.getItem('access'), reader.result, 'profile')  
+                                await UpdateImage(changeUrl, reader.result, 'profile')  
                               }
                               window.location.reload() 
                     }} />
@@ -176,7 +179,6 @@ function Profile() {
                                     className="cursor-pointer">
 
                                       <p className="text-lg font-medium">{item?.title}</p> 
-                                      {/* <p className="text-sm font-light text-gray-400">{item?.description}</p>  */}
                                       
                                     </SwiperSlide>
                                   )
@@ -286,10 +288,8 @@ function Profile() {
             </Dialog>
           </Transition.Root>
 
-
     </div>
     )
   }
-
 
 export default Profile

@@ -1,17 +1,18 @@
 import axios from "axios";
 import { IFormsList, IForm, IAnalytic } from "./models";
+import { GetAccessToken } from "../handlers";
 
 
 
 export async function ListForms(url:string, setData:React.Dispatch<React.SetStateAction<IFormsList[]>>){
-    await axios.get(url)
+    await axios.get(url + "s", { headers: { Authorization: `Bearer ${GetAccessToken()}` }})
     .then((data) => {
        setData(data.data)
     })
 }
 
 export async function FormReq(url:string, id:string, setData:React.Dispatch<React.SetStateAction<IForm | undefined>>){
-    await axios.get(url + "/" + id)
+    await axios.get(url + "/" + id, { headers: { Authorization: `Bearer ${GetAccessToken()}` }})
     .then((data) => {
        setData(data.data)
     })
@@ -25,11 +26,11 @@ export async function CreateForm(url:string, title:string, desc:string, type:num
         "title":title, 
         "description":desc, 
         "type":type
-    })
+    }, { headers: { Authorization: `Bearer ${GetAccessToken()}` }})
 }
 
 export async function DeleteForm(id:string, url:string){
-    await axios.delete(url + "/" + id)
+    await axios.delete(url + "/" + id, { headers: { Authorization: `Bearer ${GetAccessToken()}` }})
 }
 
 export async function UpdateForm(id:string, url:string, type:number, title?:string, desc?:string,){
@@ -37,7 +38,7 @@ export async function UpdateForm(id:string, url:string, type:number, title?:stri
         "title":title, 
         "description":desc,
         "type":type
-    })
+    }, { headers: { Authorization: `Bearer ${GetAccessToken()}` }})
 }
 
 
@@ -51,11 +52,11 @@ export async function CreateQuestion(url:string, formId:string, title:string, de
         "description":description,
         "required":required, 
         "type":type 
-    })
+    }, { headers: { Authorization: `Bearer ${GetAccessToken()}` }})
 }
 
 export async function DeleteQuestion(url:string, questionId:string){
-    await axios.delete(url + "/" + questionId)
+    await axios.delete(url + "/" + questionId, { headers: { Authorization: `Bearer ${GetAccessToken()}` }})
 }
 
 export async function UpdateQuestion(url:string, questionId:string, title:string, description:string, required:boolean, type:number){
@@ -65,7 +66,7 @@ export async function UpdateQuestion(url:string, questionId:string, title:string
         "description":description,
         "required":required,
         "type":type
-    })
+    },{ headers: { Authorization: `Bearer ${GetAccessToken()}` }})
 }
 
 
@@ -78,11 +79,11 @@ export async function CreateAnswer(url:string, questionId:string, content:string
         "content": content, 
         "right":right, 
         "cost":cost
-    })
+    }, { headers: { Authorization: `Bearer ${GetAccessToken()}` }})
 }
 
 export async function DeleteAnswer(url:string, answerId:string){
-    await axios.delete(url + "/" + answerId)
+    await axios.delete(url + "/" + answerId, { headers: { Authorization: `Bearer ${GetAccessToken()}` }})
 }
 
 export async function UpdateAnswer(url:string, answerId:string, content:string, right:boolean, cost:number){
@@ -90,18 +91,18 @@ export async function UpdateAnswer(url:string, answerId:string, content:string, 
         "content": content,
         "right":right,
         "cost":cost
-    })
+    }, { headers: { Authorization: `Bearer ${GetAccessToken()}` }})
 }
 
 export async function PushHistory(url:string, formId:string, selected:string){
     await axios.post(url, {
         "form": formId,
         'selected':selected,
-    })
+    }, { headers: { Authorization: `Bearer ${GetAccessToken()}` }})
 }
 
 export async function GetAnalytics(url:string, formId:string, setData:React.Dispatch<React.SetStateAction<IAnalytic | undefined>>){
-    await axios.get(url + "/" + formId )
+    await axios.get(url + "/" + formId, { headers: { Authorization: `Bearer ${GetAccessToken()}` }})
     .then(data => {
         setData(data.data)
     })

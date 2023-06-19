@@ -24,6 +24,10 @@ function Header(){
                     onClick={() => TransitionHandler("/courses", navigate)}>
                         Курсы
                     </li>
+                    <li className={style} 
+                    onClick={() => {window.location.href = `https://m.uni-team-inc.online?acess=${localStorage.getItem('access')}&refresh=${localStorage.getItem('refresh')}`}}>
+                        Мессенджер
+                    </li>
                     <li className={window.location.pathname === "/profile" ? activeStyle : style} 
                     onClick={() => TransitionHandler("/profile", navigate)}>
                         Личный кабинет
@@ -35,6 +39,7 @@ function Header(){
                 onClick={() => {
                     TransitionHandler('/', navigate)
                     localStorage.removeItem('access')
+                    localStorage.removeItem('refresh')
                 }}
                 />
             </div>

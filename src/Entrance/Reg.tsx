@@ -13,6 +13,8 @@ function Registration(){
     const[email, setEmail] = useState<string>('')
     const[psw, setPsw] = useState<string>('')
     const[control, setControl] = useState<string>('')
+    const[invalidData, setInvalidData] = useState<boolean>(false)
+    const falseData:JSX.Element = <p className="mt-1 text-center  text-red-700">Введены неверные данные</p>
     
 
     return(
@@ -41,19 +43,21 @@ function Registration(){
                                         focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
                                          focus-visible:outline-indigo-600" 
                                          onClick={async() => {
-                                            let req = await SignUp(signUpUrl, login, psw, email, control).then(data => data)
-                                            localStorage.setItem("access", req.data.access)
-                                            if(req.status === 201){
-                                                TransitionHandler("/profile", navigate)
-                                            }else{
-                                                TransitionHandler("/reg", navigate)
+                                            try{
+                                                let req = await SignUp(signUpUrl, login, psw, email, control).then(data => data)
+                                                if(req.status === 201){
+                                                    localStorage.setItem("access", req.data.access)
+                                                    localStorage.setItem("refresh", req.data.refresh)
+                                                    TransitionHandler("/profile", navigate)
+                                                }
+                                            }catch{
+                                                setInvalidData(true)
                                             }
-                                           
                                          }}>
                                             Зарегистрироваться</button>
                                     
                                     <p className="mt-2 text-center text-sm text-gray-500">Уже есть аккаунт? <a href="" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500" onClick={() => TransitionHandler("/", navigate)}>Войти</a></p>
-
+                                    {invalidData ? falseData : <></>}  
                     </div>
                 </div>
             </div>
